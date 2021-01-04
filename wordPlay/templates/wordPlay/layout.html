@@ -1,0 +1,179 @@
+{% load static %}
+
+{% load word_extras %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}WordPlay{% endblock %}</title>
+
+    <!-- Fontawesome-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+        integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link href="{% static 'wordPlay/styles.css' %}" rel="stylesheet">
+    {% block script %}
+    <script src="{% static 'wordPlay/play.js' %}"></script>
+    {% endblock %}
+</head>
+
+<body>
+    <!-- Simulate a smartphone / tablet -->
+    <div class="mobile-container">
+        <div class="mobile-nav">
+            <a href="{% url 'index' %}" class="mobile-logo">
+                <img src="{% static 'wordPlay.png' %}" alt="logo" width="32px">
+            </a>
+            <div id="homeLinks" class="dropdown-links">
+                <input type="text" placeholder="Search...">
+                <hr>
+                <a href="{% url 'index' %}">Home</a>
+                <hr>
+                <a href="">Category</a>
+                <hr>
+                {% if user.is_authenticated %}
+                <a href="{% url 'bookmarks_view' request.user %}">Bookmarks</a>
+                <hr>
+                <a href="{% url 'leaderboard' request.user %}">Leaderboard</a>
+                <hr>
+                <a href="#">{{ user.username }}</a>
+                <hr>
+                <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+                <hr>
+                {% else %}
+                <a href="{% url 'login' %}">Log In</a>
+                <hr>
+                <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+            <a href="javascript:void(0)" class="icon" onClick="mobileMenu('homeLinks')"><i class="fa fa-bars"></i></a>
+        </div>
+    </div>
+    <!-- End smartphone / tablet look -->
+
+    <div class="navbar">
+        <ul class="flex">
+            <li class="brand-img nav-item">
+                <a class="nav-link" href="{% url 'index' %}">
+                    <img src="{% static 'wordPlay.png' %}" alt="home" width="40px">
+                </a>
+            </li>
+            <li class="search nav-item">
+                <form action="{% url 'search' %}">
+                    {% csrf_token %}
+                    <input class="search" type="text" name="q" placeholder="Search...">
+                </form>
+            </li>
+            <li class="nav-item">
+                <div class="dropdown show">
+                    <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        {% category as result %}
+                        {% for item in result %}
+                        <a class="dropdown-item" href="{% url 'index' item.category %}">
+                            {{ item.category }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </li>
+            {% if user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'bookmarks_view' request.user  %}">Bookmarks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'leaderboard' request.user %}">Leaderboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">Register</a>
+            </li>
+            {% endif %}
+        </ul>
+
+        {% if user.is_authenticated %}
+        <div class="menu flex">
+            <div class="create-menu">
+                <a href="javascript:void(0)" class="icon" onClick="mobileMenu('create-links')">
+                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-caret-down"></i>
+                </a>
+            </div>
+            <div class="profile-menu">
+                <a href="javascript:void(0)" class="icon" onClick="mobileMenu('profile-links')">
+                    <i class="fas fa-caret-down"></i>
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    {% block body %}
+    {% endblock %}
+
+    {% if user.is_authenticated %}
+    <div id="create-links" class="dropdown-links">
+        <a id="new-word" href="{% url 'new' %}">New word</a>
+        <a href="{% url 'create_category' %}">New category</a>
+    </div>
+
+    <div id="profile-links" class="dropdown-links">
+        <span>Signed in as</span>
+        <span><strong>{{ user.username }}</strong>
+        </span>
+        <hr>
+        <a href="{% url 'profile' request.user %}">Your profile</a>
+        <a href="{% url 'words_view' request.user %}">Your words</a>
+        <a href="{% url 'bookmarks_view' request.user %}">Your bookmarks</a>
+        <a href="{% url 'likes_view' request.user %}">Your likes</a>
+        <a href="{% url 'likeds_view' request.user %}">Your likeds</a>
+        <hr>
+        <a href="{% url 'logout' %}">Sign out</a>
+    </div>
+    {% endif %}
+
+    <footer>
+        <div class="container">
+            <span>&#169; 2020 wordPlay, Inc.</span>
+            <a href="{% url 'about' %}">About</a>
+        </div>
+    </footer>
+
+    <!-- Hamburger and dropdown menu hide and show -->
+    <script>
+        function mobileMenu(elementIdToShow) {
+            var element = document.getElementById(elementIdToShow);
+            if (element.style.display === "block") {
+                element.style.display = 'none';
+            } else {
+                element.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

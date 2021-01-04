@@ -1,0 +1,282 @@
+{% extends "wordPlay/layout.html" %}
+
+{% load static %}
+
+{% load word_extras %}
+
+{% block body %}
+
+<div class="upper-container">
+    <hr id="upper-hr">
+</div>
+
+<div class="main">
+    <div class="container grid">
+        <!-- Left container for profile info -->
+        {% count as count %}
+        <div class="left-container">
+            {% if user.is_authenticated %}
+            <div id="profile-summary">
+                {% if user.image %}
+                <img class="profile-image" src="{{ user.image.url }}" alt="profile-image" width="88px" height="88px">
+                {% endif %}
+                <strong>{{ user.username }}</strong>
+            </div>
+            <hr>
+            <div id="words-summary">
+                <a href="{% url 'words_view' user %}">{{ count.count }} Words</a>
+            </div>
+            <hr>
+            <div id="bookmarks-summary">
+                <a class="count_bookmarks" href="{% url 'bookmarks_view' user %}">{{ count.bookmark_count }}
+                    Bookmarks</a>
+            </div>
+            <hr>
+            <div id="likes-summary">
+                <a class="count_likes" href="{% url 'likes_view' user %}">{{ count.like_count }} Likes</a>
+            </div>
+            <hr>
+            <div id="liked-summary">
+                <a href="{% url 'likeds_view' user %}">{{ count.liked_count }}
+                    Liked</a>
+            </div>
+            {% endif %}
+        </div>
+
+
+
+        <!-- Middle container for word collection -->
+        {% block middle %}
+        <div class="middle-container">
+            {% block words %}
+            {% block heading %}
+            <h5>Let's explore and learn some new words...</h5>
+            {% endblock %}
+            {% if message %}
+            <div>{{ message }}</div>
+            {% endif %}
+
+            {% words request as words %}
+
+            {% for word in words.words %}
+            <div id="page">
+                <div class="new-words content">
+                    <div class="upper-words">
+                        <p><i class="fas fa-satellite-dish"></i><span>Based on words you have viewed</span></p>
+                        <div class="words-name">
+                            <i class="fas fa-language"></i>
+                            <a href="{% url 'word' word.id %}">{{ word.title }}</a>
+                            <form class="bookmark-form">
+                                {% csrf_token %}
+                                <button class="bookmark" id="bookmark-button{{ word.id }}"
+                                    onClick="bookmark('{{ word.id }}', '{{ request.user.id }}')" type="submit"
+                                    name="place-bookmark">
+                                    <span class="fa-stack" id="bookmark-mark{{ word.id }}">
+                                        <i class="far fa-bookmark fa-stack-2x bookmark-mark{{ word.id }}"></i>
+                                        {% for all_bookmark in words.all_bookmarks %}
+                                        {% if all_bookmark.user == request.user %}
+                                        {% if all_bookmark.title.id == word.id %}
+                                        <i class="fas fa-bookmark fa-stack-2x bookmark-mark{{ word.id }}"></i>
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </span>
+                                </button>
+                            </form>
+
+                            {% if word.user == request.user %}
+                            <form action="{% url 'delete' word.id %}" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <button class="word-delete">Delete</button>
+                            </form>
+                            <button class="word-edit"><a href="{% url 'edit' word.id %}">Edit</a></button>
+                            {% endif %}
+
+                            <div class="synonyms">Synonyms:
+                                {% for word_synonym in words.word_synonyms %}
+                                {% if word_synonym.title.id == word.id %}
+                                {% if word_synonym.synonym == none %}
+                                {{ word_synonym.synonym }}
+                                {% else %}
+                                <button>
+                                    <a href="{% url 'word' word_synonym.synonym %}">{{ word_synonym.synonym }}</a>
+                                </button>
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="antonyms">Antonyms:
+                                {% for word_antonym in words.word_antonyms %}
+                                {% if word.id == word_antonym.title.id %}
+                                {% if word_antonym.antonym == none %}
+                                {{ word_antonym.antonym }}
+                                {% else %}
+                                <button>
+                                    <a href="{% url 'word' word_antonym.antonym %}">{{ word_antonym.antonym }}</a>
+                                </button>
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="tabs">
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">Active</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'quotations' word.id %}">
+                                        Quotations
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="word_media">Images/videos</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="lower-words">
+                        <p class="definition definition-title content">Definitions: </p>
+                        <p class="definition content">
+                            <a href="{% url 'index' word.category %}">{{ word.category }}</a>
+                            {{ word.definition }}
+                        </p>
+
+                        <div class="word-image definition">
+                            {% if word.image %}
+                            <img src="{{ word.image.url }}" alt="" width="150px" />
+                            {% elif word.image_url %}
+                            <img src="{{ word.image_url }}" alt="" width="150px" />
+                            {% endif %}
+
+
+                            {% if word.video %}
+                            <video width="320" height="180" controls>
+                                <source src="{{ word.video.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            {% elif word.video_url %}
+                            <iframe width="320" height="180" src=" {{ word.video_url }}" frameborder="0"
+                                allowfullscreen>
+                            </iframe>
+                            {% endif %}
+                        </div>
+                        {% for word_quotation in words.word_quotations %}
+                        {% if word.id == word_quotation.title.id %}
+                        {% if word_quotation.quotation %}
+                        <form class="like-form">
+                            {% csrf_token %}
+                            <p class="quotes timestamp">
+                                <span class="count{{ word_quotation.id }} like-count">
+                                    {{ word_quotation.like_count }}
+                                </span>
+                                <span>
+                                    <button class="like-button" id="like-button{{ word_quotation.id }}"
+                                        onClick="like('{{ word_quotation.id }}', '{{ request.user.id }}')" type="submit"
+                                        name="place-like">
+                                        <span class="fa-stack" id="like-heart{{ word_quotation.id }}">
+                                            <i class="far fa-heart fa-stack-2x like-heart{{ word_quotation.id }}"></i>
+                                            {% for all_liking in words.all_likings %}
+                                            {% if all_liking.user == request.user %}
+                                            {% if all_liking.title == word_quotation %}
+                                            <i class="fas fa-heart fa-stack-2x like-heart{{ word_quotation.id }}"></i>
+                                            {% endif %}
+                                            {% endif %}
+                                            {% endfor %}
+                                        </span>
+                                    </button>
+                                </span>
+                                Quotation:
+
+                                {{ word_quotation.quotation }}
+
+
+                                {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                                <a class="quote_link" href="{% url 'add_quotation' word.id %}">
+                                    <i class="fas fa-plus"> Quotation</i>
+                                </a>
+                            </p>
+                        </form>
+
+
+                        <hr>
+                        <p class="timestamp">Updated by
+                            <a href="{% url 'profile' word.user.username %}">
+                                <strong>
+                                    {{ word.user.username }}
+                                </strong>
+                            </a>
+                            on
+                            {{ word.timestamp }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            {% endfor %}
+            {% endblock %}
+        </div>
+
+        {% endblock %}
+        <!-- Right container for word and quotation trending -->
+        {% trending request as trendings %}
+
+        {% block trending_words %}
+        <div class="right-container">
+            <div id="trending-words">
+                <h6><i class="fas fa-satellite-dish"></i><strong> Trending words</strong> today</h6>
+                {% for first_word in trendings.first_words %}
+                {% if first_word.title %}
+                <div class="div-quotes">
+                    <p class="trending-quotes">
+                        <a href="{% url 'word' first_word.id %}">{{ first_word.title }}</a>
+                        <span>created by {{ first_word.user.username }}</span>
+                    </p>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <p><a href="{% url 'trending_words' %}">See more trending words...</a></p>
+            </div>
+            {% endblock %}
+            {% block trending_quotes %}
+            <div id="trending-quotations">
+                <h6><i class="fas fa-satellite-dish"></i><strong> Trending quotations</strong> today</h6>
+                {% for first_quote in trendings.first_quotes %}
+                {% if first_quote.quotation %}
+                <div class="div-quotes">
+                    <p class="trending-quotes">{{ first_quote.quotation }}</p>
+                </div>
+                {% endif %}
+                {% endfor %}
+                <p><a href="{% url 'trending_quotes' %}">See more trending quotations...</a></p>
+            </div>
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<!-- Create button -->
+<div>
+    <a href="{% url 'new' %}">
+        <div class="circle">
+            <i class="fas fa-plus"></i>
+        </div>
+    </a>
+</div>
+</div>
+
+{% words request as words %}
+
+{% block pagination %}
+<nav aria-label="Page navigation">
+    <ul id="pagination-demo" class="pagination">
+
+        <input id="page-numbers" type="hidden" value="{{ words.page_obj.paginator.num_pages }}">
+
+    </ul>
+</nav>
+{% endblock %}
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'wordPlay/index.html' %}
+
+{% load static %}
+
+{% load word_extras %}
+
+{% block body %}
+<div class="upper-container profile-container">
+    <hr id="upper-hr">
+</div>
+
+<div class="profile">
+    <div class="container grid">
+        <div class="edit-profile">
+            <div class="personal-details">
+                {% if user.image %}
+                <img class="profile-image" src="{{ user.image.url }}" alt="" width="250px" height="250px"><br>
+                {% endif %}
+            </div>
+            <div>
+                <p><strong>{{ user }}</strong></p>
+            </div>
+
+            <div>
+                <form action="{% url 'profile' request.user %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% if user == request.user %}
+                    <p>{{ update_user.image }}</p>
+                    <button type="submit" class="edit-button">Update profile image</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+        {% count as count %}
+        <div class="profile-details">
+            <div class="tabs">
+                <ul class="profile-items nav">
+                    <li class="nav-item">
+                        <a class="nav-link overview-link" href="{% url 'profile' user %}"><i
+                                class="far fa-user-circle"></i>Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'words_view' user %}">
+                            <i class="fas fa-language"></i>
+                            Words <div class="numberCircle">{{ count.count }}</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'bookmarks_view' user %}">
+                            <i class="far fa-bookmark"></i>
+                            Bookmarks <span class="numberCircle bookmarkCircle">{{ count.bookmark_count }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="likes-view">
+                        <a class="nav-link" href="{% url 'likes_view' user %}">
+                            <i class="far fa-heart"></i>
+                            Likes <span class="numberCircle likeCircle">{{ count.like_count }}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'likeds_view' user %}">
+                            <i class="far fa-thumbs-up"></i>
+                            Likeds <span class="numberCircle">{{ count.liked_count }}</span>
+                        </a>
+                    </li>
+                </ul>
+                {% block overview %}
+                <div class="overview">
+                    <p>{{ count.count }} words in the last year</p>
+                    <p>{{ count.bookmark_count }} Bookmarks in the last year</p>
+                    <p>{{ count.like_count }} Likes in the last year</p>
+                    <p>{{ count.liked_count }} Likeds in the last year</p>
+                </div>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

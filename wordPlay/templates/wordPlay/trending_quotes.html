@@ -1,0 +1,43 @@
+{% extends "wordPlay/index.html" %}
+{% load static %}
+
+{% block middle %}
+<div class="middle-container">
+    <div>
+        <h6>
+            <i class="fas fa-satellite-dish"></i>
+            <strong> Trending quotations</strong> today
+        </h6>
+        <hr />
+        {% for trending_quote in trending_quotes %}
+        {% if trending_quote.quotation %}
+        <div id="page">
+            <div class="div-quotes content">
+
+                <p>
+                    <span class="trending-quotes">{{ trending_quote.quotation }}</span>
+                    <span class="liked_times">
+                        liked &times <span class="numberCircle">{{ trending_quote.like_count }}</span>
+                    </span>
+                </p>
+
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block trending_quotes %}
+{% endblock %}
+
+{% block pagination %}
+<nav aria-label="Page navigation">
+    <ul id="pagination-demo" class="pagination">
+
+        <input id="page-numbers" type="hidden" value="{{ page_obj.paginator.num_pages }}">
+
+    </ul>
+</nav>
+{% endblock %}

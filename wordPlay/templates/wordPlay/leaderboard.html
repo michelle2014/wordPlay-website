@@ -1,0 +1,17 @@
+{% extends 'wordPlay/layout.html' %}
+
+{% load static %}
+
+{% block body %}
+<h2>Leaderboard</h2>
+<div id="leaderboard">
+    <h5>Top Player</h5>
+    {% for top_user in top_users %}
+    <h6>{{ max_word }} words by
+        {% if top_user.image %}
+        <img class="profile-image" src="{{ top_user.image.url }}" alt="" width="50px" height="50px">
+        {% endif %}
+        {{ top_user.username }}</h6>
+    {% endfor %}
+</div>
+{% endblock %}

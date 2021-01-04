@@ -1,0 +1,23 @@
+{% extends "wordPlay/layout.html" %}
+
+{% block title %}
+
+Search Results
+
+{% endblock %}
+
+{% block body %}
+
+<h2>Search results:</h2>
+<ul id="search_list">
+    {% for result in results %}
+    <li>
+        <a href="{% url 'word' result.id %}">{{ result.title }}</a>
+    </li>
+    {% empty %}
+    <li>No result.</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

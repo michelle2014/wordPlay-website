@@ -1,0 +1,34 @@
+{% extends "wordPlay/layout.html" %}
+
+{% block body %}
+
+<div class="upper-container">
+    <hr id="upper-hr">
+</div>
+
+<h2>Log in to Word Play</h2>
+
+<div class="login-div">
+
+    {% if message %}
+    <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <input class="btn btn-success btn-block" type="submit" value="Login">
+    </form>
+</div>
+
+<div class="register-link">
+    <p id="register">Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
+</div>
+
+
+{% endblock %}

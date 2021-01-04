@@ -1,0 +1,39 @@
+{% extends "wordPlay/index.html" %}
+
+{% load static %}
+
+{% block word %}
+
+<div class="quotations content">
+    <div class="quotations-title">
+        <h5>Quotations of
+            <a href="{% url 'word' word.id %}">
+                {{ word.title }}
+            </a>
+        </h5>
+    </div>
+    <hr />
+
+    {% for quotation in quotations %}
+    <div id="page">
+        <div class="content">
+            {% if quotation.quotation %}
+            {{ quotation.quotation }}
+            <hr />
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block pagination %}
+<nav aria-label="Page navigation">
+    <ul id="pagination-demo" class="pagination">
+
+        <input id="page-numbers" type="hidden" value="{{ page_obj.paginator.num_pages }}">
+
+    </ul>
+</nav>
+{% endblock %}

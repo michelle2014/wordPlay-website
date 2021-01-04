@@ -1,0 +1,39 @@
+{% extends 'wordPlay/layout.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="create-word">
+    <div class="create-title">
+        <h4>Upload a vocabulary file</h4>
+        <p>File format supported: tsv, csv, xls, xlsx, ods. </p>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}" {% endif %}><i class="far fa-bell"></i> {{ message }}
+                </li>
+                {% endfor %}
+        </ul>
+        {% endif %}
+        <form action="{% url 'upload' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            Select file to upload:
+            <input type="file" name="fileToUpload" id="fileToUpload">
+            <input class="btn btn-success" type="submit" value="Upload" name="upload">
+        </form>
+    </div>
+    <div class="file-example">
+        <h4>File example</h4>
+        <img src="{% static 'file_example.png' %}" alt="file example" width="740px">
+        <hr />
+        <pre>
+        Tips about YouTube video url:
+            1. On a computer, go to the YouTube video you want to embed.
+            2. Under the video, click SHARE .
+            3. Click Embed.
+            4. From the box that appears, copy the HTML code.
+            5. Paste the url src code into file to be uploaded.
+        </pre>
+    </div>
+</div>
+{% endblock %}

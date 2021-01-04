@@ -1,0 +1,32 @@
+{% extends 'wordPlay/layout.html' %}
+
+{% load static %}
+
+
+{% block body %}
+<div class="upper-container">
+    <hr class="upper-hr">
+</div>
+
+<div class="create-word">
+    <div class="create-title">
+        <h4>Create a new category</h4>
+        <p>A category doesn't have to be a part of speech. It can be any fun category you like. For example, a category
+            of
+            "A Game of Thrones" is totally fine. Already have a
+            category file elsewhere? </p>
+        <p id="import-creategory"><a href="">Import a category file.</a></p>
+    </div>
+    <hr>
+    <form action="{% url 'create_category' %}" novalidate method="post" name="category" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create-part">
+            <label class="required"><strong>Category</strong></label>
+            <p>{{ create.category }}</p>
+        </div>
+        <hr>
+        <input type='submit' class="btn btn-success" id="category-submit" value="Create category">
+        <hr>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "wordPlay/index.html" %}
+{% load static %}
+
+
+{% block heading %}
+<h6><i class="fas fa-satellite-dish"></i><strong> Trending words</strong> today</h6>
+{% endblock %}
+
+{% block trending_words %}
+{% endblock %}
+
+{% block pagination %}
+<nav aria-label="Page navigation">
+    <ul id="pagination-demo" class="pagination">
+
+        <input id="page-numbers" type="hidden" value="{{ page_obj.paginator.num_pages }}">
+
+    </ul>
+</nav>
+{% endblock %}

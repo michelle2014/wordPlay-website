@@ -1,0 +1,32 @@
+{% extends 'wordPlay/layout.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="upper-container">
+    <hr class="upper-hr">
+</div>
+
+<div class="create-word">
+    <div class="create-title">
+        <h4>Add quotation</h4>
+        <p>A vocabulary file contains title, meaning, and optional quotations, image or video files. Already have a
+            vocabulary file elsewhere? </p>
+        <p id="add-quotation"><a href="">Import a vocabulary file.</a></p>
+    </div>
+    <hr>
+    <form action="{% url 'add_quotation' word.id %}" novalidate method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create-part">
+            <label class="required"><strong>Quotation</strong></label>
+            <p id="word-quotation">{{ quote.quotation }}</p>
+        </div>
+        <hr>
+        <input type='submit' class="btn btn-success" id="add-submit" value="Add quotation">
+        <hr>
+    </form>
+
+</div>
+
+
+{% endblock %}

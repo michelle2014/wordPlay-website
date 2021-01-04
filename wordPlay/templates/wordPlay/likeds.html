@@ -1,0 +1,34 @@
+{% extends 'wordPlay/my_words.html' %}
+
+{% load static %}
+
+{% load word_extras %}
+
+{% block heading %}
+<h4>My likeds...</h4>
+{% endblock %}
+
+{% block words %}
+{% for quotation in quotations %}
+<div id="page">
+    <div class="new-likes content">
+
+        <hr />
+        {{ quotation.quotation }}
+        <span class="liked_times">liked &times <span class="numberCircle">{{ quotation.like_count }}</span></span>
+
+
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block pagination %}
+<nav aria-label="Page navigation">
+    <ul id="pagination-demo" class="pagination">
+
+        <input id="page-numbers" type="hidden" value="{{ page_obj.paginator.num_pages }}">
+
+    </ul>
+</nav>
+{% endblock %}

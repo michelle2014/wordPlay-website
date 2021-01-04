@@ -1,0 +1,76 @@
+{% extends 'wordPlay/layout.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="upper-container">
+    <hr class="upper-hr">
+</div>
+
+<div class="create-word">
+    <div class="create-title">
+        <h4>Edit the word</h4>
+        <p>A vocabulary file contains title, meaning, and optional quotations, image or video files. Already have a
+            vocabulary file elsewhere? </p>
+        <p id="import-word"><a href="">Import a vocabulary file.</a></p>
+    </div>
+    <hr>
+    <form action="{% url 'edit' word.id %}" novalidate method="post" id="create-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class=" create-part">
+            <label class="required"><strong>Owner</strong></label>
+            <label class="required"><strong>Word</strong></label>
+            <p>
+                <select id="word-user">
+                    <option value="{{ request.user.username }}">&#10003 {{ request.user.username }}
+                    </option>
+                </select>
+                <span id="word-title">/ {{ original_word.title }}<span>
+            </p>
+            <label class="required"><strong>Definition</strong></label>
+            <p id="word-definition">{{ original_word.definition }}</p>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><strong>Category</strong> (optional)</label>
+            <select id="word-select" class="word-category" name="category">
+                <option value="{{ original_category }}" selected="selected">{{ original_category }}</option>
+                {% for category in categories %}
+                <option value="{{ category.category }}">{{ category.category }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><strong>Synonyms</strong> (optional)</label>
+            <label><strong>Antonyms</strong> (optional)</label>
+            <p>
+                <span id="word-synonym" class="synonym-input">{{ original_synonym.synonym }}</span>
+                <span id="word-antonym" class="synonym-input"> / {{ original_antonym.antonym }}</span>
+            </p>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><strong>Quotation</strong> (optional)</label>
+            <p id="word-quotation">{{ original_quotation.quotation }}</p>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><span class="media"><strong>Image</strong> (optional) </span></label>
+            {{ original_word.image }}
+            {{ original_word.image_url }}
+            </td>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><span class="media"><strong>Video</strong> (optional) </span></label>
+            {{ original_word.video }}
+            {{ original_word.video_url }}
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-success" id="edit-submit">Update
+            word</button>
+        <hr>
+    </form>
+</div>
+{% endblock %}

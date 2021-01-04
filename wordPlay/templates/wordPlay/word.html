@@ -1,0 +1,171 @@
+{% extends "wordPlay/index.html" %}
+
+{% load static %}
+
+{% load word_extras %}
+
+{% block word %}
+<h5>Let's explore some new comments...</h5>
+
+<div class="new-words">
+    <div class="upper-words">
+        <p><i class="fas fa-satellite-dish"></i><span>You can comment on both word and quotation</span></p>
+        <div class="words-name">
+            <i class="fas fa-language"></i>
+            <a href="{% url 'word' word.id %}">{{ word.title }}</a>
+            <!-- <span id="bookmark{{ word.id }}">{{ word.bookmark_count }}</span> -->
+            <form class="bookmark-form" method="post">
+                {% csrf_token %}
+                <button class="bookmark" id="bookmark-button{{ word.id }}"
+                    onClick="bookmark('{{ word.id }}', '{{ request.user.id }}')" type="submit" name="place-bookmark">
+                    <span class="fa-stack" id="bookmark-mark{{ word.id }}">
+                        <i class="far fa-bookmark fa-stack-2x bookmark-mark{{ word.id }}"></i>
+                        {% for all_bookmark in all_bookmarks %}
+                        {% if all_bookmark.user == request.user %}
+                        {% if all_bookmark.title.id == word.id %}
+                        <i class="fas fa-bookmark fa-stack-2x bookmark-mark{{ word_id }}"></i>
+                        {% endif %}
+                        {% endif %}
+                        {% endfor %}
+                    </span>
+                </button>
+            </form>
+            <button class="word-edit"><a href="{% url 'edit' word.id %}">Edit</a></button>
+            <div class="synonyms">Synonyms:
+                {% if word_synonym.synonym == none %}
+                {{ word_synonym.synonym }}
+                {% else %}
+                <button>
+                    <a href="{% url 'word' word_synonym.synonym %}">{{ word_synonym.synonym }}</a>
+                </button>
+                {% endif %}
+            </div>
+            <div class="antonyms">Antonyms:
+                {% if word_antonym.antonym == none %}
+                {{ word_antonym.antonym }}
+                {% else %}
+                <button>
+                    <a href="{% url 'word' word_antonym.antonym %}">{{ word_antonym.antonym }}</a>
+                </button>
+                {% endif %}
+            </div>
+        </div>
+        <div class="tabs">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#">Active</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'quotations' word.id %}">
+                        Quotations
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="word_media">Images/videos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="lower-words">
+        <p class="definition definition-title content">Definitions: </p>
+        <p class="definition content">
+            <a href="{% url 'index' word.category %}">
+                {{ word.category }}
+            </a>
+            {{ word.definition }}
+        </p>
+
+        <div class="word-image definition">
+            {% if word.image %}
+            <img src="{{ word.image.url }}" alt="" width="150px" height="180px" />
+            {% elif word.image_url %}
+            <img src="{{ word.image_url }}" alt="" width="150px" height="180px" />
+            {% endif %}
+
+
+            {% if word.video %}
+            <video width="320" height="180" controls>
+                <source src="{{ word.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            {% elif word.video_url %}
+            <iframe width="320" height="180" src=" {{ word.video_url }}" frameborder="0" allowfullscreen>
+            </iframe>
+            {% endif %}
+        </div>
+        <a class="quote_link" href="{% url 'add_quotation' word.id %}">
+            <i class="fas fa-plus"> Quotation</i>
+        </a>
+        {% if word_quotation.quotation %}
+        <form class="like-form" method="post">
+            {% csrf_token %}
+            <p class="quotes timestamp">
+                <span class="count{{ word.id }}" class="like-count">{{ word_quotation.like_count }}</span>
+                <span>
+                    <button class="like-button" id="like-button{{ word.id }}"
+                        onClick="like('{{ word.id }}', '{{ request.user.id }}')" type="submit" name="place-like">
+                        <span class="fa-stack" id="like-heart{{ word.id }}">
+                            <i class="far fa-heart fa-stack-2x like-heart{{ word.id }}"></i>
+                            {% for all_liking in all_likings %}
+                            {% if all_liking.user == request.user %}
+                            {% if all_liking.title == word_quotation %}
+                            <i class="fas fa-heart fa-stack-2x like-heart{{ word.id }}"></i>
+                            {% endif %}
+                            {% endif %}
+                            {% endfor %}
+                        </span>
+                    </button>
+                </span>
+                Quotation:
+                {{ word_quotation.quotation }}
+            </p>
+        </form>
+        {% endif %}
+        <hr>
+        <p class="timestamp">Updated by
+            <a href="{% url 'profile' word.user.username %}">
+                <strong>
+                    {{ word.user.username }}
+                </strong>
+            </a>
+            on
+            {{ word.timestamp }}
+        </p>
+    </div>
+</div>
+<div class="add-comment">
+    <form action="{% url 'word' word.id %}" name="comment" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ add_comment }}
+        <input type='submit' class="btn btn-success new-comment" id="comment-submit" value="Add Comment">
+    </form>
+</div>
+{% for comment in comments %}
+<div id="page">
+    <div class="comments content">
+        Comments:
+        <hr />
+        {{ comment.comment }}
+        <span class="comment-by"> - commented by
+            <a href="{% url 'profile' comment.user.username %}">
+                <strong>
+                    {{ comment.user.username }}
+                </strong>
+            </a>
+            at {{ comment.comment_at }}
+        </span>
+        <hr />
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block pagination %}
+<nav aria-label="Page navigation">
+    <ul id="pagination-demo" class="pagination">
+
+        <input id="page-numbers" type="hidden" value="{{ page_obj.paginator.num_pages }}">
+
+    </ul>
+</nav>
+{% endblock %}

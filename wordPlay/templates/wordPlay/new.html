@@ -1,0 +1,85 @@
+{% extends 'wordPlay/layout.html' %}
+
+{% load static %}
+
+{% block body %}
+<div class="upper-container">
+    <hr class="upper-hr">
+</div>
+
+<div class="create-word">
+    <div class="create-title">
+        <h4>Create a new word</h4>
+        <p>A vocabulary file contains title, meaning, and optional quotations, image or video files. Already have a
+            vocabulary file elsewhere? </p>
+        <p id="import-word"><a href="{% url 'upload' %}">Import a vocabulary file.</a></p>
+    </div>
+    <hr>
+    <form action="{% url 'new' %}" method="post" id="create-form" novalidate enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="create-part">
+            <label class="required"><strong>Owner</strong></label>
+            <label class="required"><strong>Word</strong></label>
+            <p>
+                <select id="word-user">
+                    <option value="{{ request.user.username }}">&#10003 {{ request.user.username }}
+                    </option>
+                </select>
+                <span id="word-title">/ {{ new.title }}<span>
+            </p>
+            <label class="required"><strong>Definition</strong></label>
+            <p id="word-definition">{{ new.definition }}</p>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label class="required"><strong>Category</strong></label>
+            <select name="category">
+                <option value="" selected="selected">---SELECT---</option>
+                {% for category in categories %}
+                <option value="{{ category.category }}">{{ category.category }}</option>
+                {% endfor %}
+                <!-- <option value="noun">Noun</option>
+                <option value="verb">Verb</option>
+                <option value="adjective">Adjective</option>
+                <option value="adverb">Adverb</option>
+                <option value="pronoun">Pronoun</option>
+                <option value="preposition">Preposition</option>
+                <option value="conjunction">Conjunction</option>
+                <option value="determiner">Determiner</option>
+                <option value="interjection">Interjection</option> -->
+
+            </select>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><strong>Synonyms</strong> (optional)</label>
+            <label><strong>Antonyms</strong> (optional)</label>
+            <p>
+                <span id="word-synonym" class="synonym-input">{{ synonyms.synonym }}</span>
+                <span id="word-antonym" class="synonym-input"> / {{ antonyms.antonym }}</span>
+            </p>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><strong>Quotation</strong> (optional)</label>
+            <p id="word-quotation">{{ quote.quotation }}</p>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><span class="media"><strong>Image</strong> (optional)</span></label>
+            {{ new.image }}
+            {{ new.image_url }}
+            </td>
+        </div>
+        <hr>
+        <div class="create-part">
+            <label><span class="media"><strong>Video</strong> (optional)</span></label>
+            {{ new.video }}
+            {{ new.video_url }}
+        </div>
+        <hr>
+        <input type='submit' class="btn btn-success" id="create-submit" value="Create word">
+        <hr>
+    </form>
+</div>
+{% endblock %}
