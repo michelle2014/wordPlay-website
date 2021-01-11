@@ -98,15 +98,15 @@ h2,
 }
 
 .menu div {
-  padding: 0px 25px;
-}
-
-.navbar .brand-img {
-  margin-right: 15px;
+  padding: 0px 15px;
 }
 
 .navbar ul {
   margin: 0px;
+}
+
+.nav-item {
+  margin-left: -10px;
 }
 
 /* Navbar right corner */
@@ -409,13 +409,9 @@ h5 {
   border: 1px solid #ccf2ff;
 }
 
-.lower-words img,
-.lower-words video {
-  margin-left: 30px;
-}
-
-iframe {
-  margin-left: 30px;
+iframe,
+.word-image video {
+  margin-left: 10px;
 }
 
 .word-image {
@@ -590,6 +586,7 @@ h4 {
   .profile .grid {
     grid-template-columns: 1fr;
   }
+
   .mobile-container,
   .circle {
     display: block;
@@ -654,25 +651,6 @@ h4 {
 
   .main hr {
     background-color: #f5f5f5;
-  }
-
-  /* Tablet words section */
-  .word-image img {
-    width: 320px;
-  }
-
-  .word-image {
-    flex-direction: column;
-  }
-
-  .lower-words img,
-  .lower-words video {
-    margin-left: 25px;
-    margin-top: 10px;
-  }
-
-  iframe {
-    margin-left: 25px;
   }
 
   /* Plus sign on mobile */
@@ -761,7 +739,6 @@ h4 {
   }
 
   /* Mobile profile */
-
   .profile-image {
     margin-top: 70px;
     width: 88px;
@@ -783,5 +760,5 @@ h4 {
 }
 
 /* Mobile */
-@media (max-width: 500px) {
+@media (max-width: 731px) {
 }
