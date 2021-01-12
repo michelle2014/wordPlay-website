@@ -249,88 +249,99 @@ def upload(request):
 
     if request.method == "POST":
 
-        excel_file = request.FILES["fileToUpload"]
-        file_suffix = str(excel_file).split(".")[-1]
+        excel_file = (
+            request.FILES["fileToUpload"] if "filepath" in request.FILES else False
+        )
+        if excel_file:
+            file_suffix = str(excel_file).split(".")[-1]
 
-        # Get file with different suffix
-        if file_suffix == "xls":
-            data = pd.read_excel(excel_file, engine="xlrd")
-        elif file_suffix == "xlsx":
-            data = pd.read_excel(excel_file, engine="openpyxl")
-        elif file_suffix == "ods":
-            data = pd.read_excel(excel_file, engine="odf")
-        elif file_suffix == "csv":
-            data = pd.read_csv(excel_file, sep="\t")
-        elif file_suffix == "tsv":
-            data = pd.read_csv(excel_file, sep="\t")
+            # Get file with different suffix
+            if file_suffix == "xls":
+                data = pd.read_excel(excel_file, engine="xlrd")
+            elif file_suffix == "xlsx":
+                data = pd.read_excel(excel_file, engine="openpyxl")
+            elif file_suffix == "ods":
+                data = pd.read_excel(excel_file, engine="odf")
+            elif file_suffix == "csv":
+                data = pd.read_csv(excel_file, sep="\t")
+            elif file_suffix == "tsv":
+                data = pd.read_csv(excel_file, sep="\t")
 
-        # If format of file to be uploaded not supported
+            # If format of file to be uploaded not supported
+            else:
+                messages.error(
+                    request,
+                    "Unsupported file format. Please upload a file in formats listed above.",
+                )
+                return render(request, "wordPlay/import.html")
+
+            # Create words from uploaded file
+            titles = data.get("title")
+            definitions = data.get("definition")
+            categories = data.get("category")
+            images = data.get("image")
+            videos = data.get("video")
+            synonyms = data.get("synonym")
+            antonyms = data.get("antonym")
+            quotations = data.get("quotation")
+            cates = []
+            words = []
+            for category in categories:
+                category = Category.objects.get(category=category)
+                cates.append(category)
+
+            for i in range(len(titles)):
+                if images[i] == "" or (
+                    isinstance(images[i], float) and math.isnan(images[i])
+                ):
+                    images[i] = None
+                if videos[i] == "" or (
+                    isinstance(videos[i], float) and math.isnan(videos[i])
+                ):
+                    videos[i] = None
+                word = Word.objects.create(
+                    user=request.user,
+                    title=titles[i],
+                    definition=definitions[i],
+                    category=cates[i],
+                    image_url=images[i],
+                    video_url=videos[i],
+                )
+                word.save()
+                words.append(word)
+
+            # Create symnonym, antonym, quotation from file uploaded
+            for i in range(len(words)):
+                if synonyms[i] == "" or (
+                    isinstance(synonyms[i], float) and math.isnan(synonyms[i])
+                ):
+                    synonyms[i] = None
+                synonym = Synonym.objects.create(title=words[i], synonym=synonyms[i])
+                synonym.save()
+                if antonyms[i] == "" or (
+                    isinstance(antonyms[i], float) and math.isnan(antonyms[i])
+                ):
+                    antonyms[i] = None
+                antonym = Antonym.objects.create(title=words[i], antonym=antonyms[i])
+                antonym.save()
+                if quotations[i] == "" or (
+                    isinstance(quotations[i], float) and math.isnan(quotations[i])
+                ):
+                    quotations[i] = None
+                quotation = Quotation.objects.create(
+                    title=words[i], quotation=quotations[i]
+                )
+                quotation.save()
+
+            return HttpResponseRedirect(reverse("index"))
+
+        # If no file is uploaded
         else:
             messages.error(
                 request,
-                "Unsupported file format. Please upload a file in formats listed above.",
+                "No file uploaded. Please upload a file in formats listed above.",
             )
             return render(request, "wordPlay/import.html")
-
-        # Create words from uploaded file
-        titles = data.get("title")
-        definitions = data.get("definition")
-        categories = data.get("category")
-        images = data.get("image")
-        videos = data.get("video")
-        synonyms = data.get("synonym")
-        antonyms = data.get("antonym")
-        quotations = data.get("quotation")
-        cates = []
-        words = []
-        for category in categories:
-            category = Category.objects.get(category=category)
-            cates.append(category)
-
-        for i in range(len(titles)):
-            if images[i] == "" or (
-                isinstance(images[i], float) and math.isnan(images[i])
-            ):
-                images[i] = None
-            if videos[i] == "" or (
-                isinstance(videos[i], float) and math.isnan(videos[i])
-            ):
-                videos[i] = None
-            word = Word.objects.create(
-                user=request.user,
-                title=titles[i],
-                definition=definitions[i],
-                category=cates[i],
-                image_url=images[i],
-                video_url=videos[i],
-            )
-            word.save()
-            words.append(word)
-
-        # Create symnonym, antonym, quotation from file uploaded
-        for i in range(len(words)):
-            if synonyms[i] == "" or (
-                isinstance(synonyms[i], float) and math.isnan(synonyms[i])
-            ):
-                synonyms[i] = None
-            synonym = Synonym.objects.create(title=words[i], synonym=synonyms[i])
-            synonym.save()
-            if antonyms[i] == "" or (
-                isinstance(antonyms[i], float) and math.isnan(antonyms[i])
-            ):
-                antonyms[i] = None
-            antonym = Antonym.objects.create(title=words[i], antonym=antonyms[i])
-            antonym.save()
-            if quotations[i] == "" or (
-                isinstance(quotations[i], float) and math.isnan(quotations[i])
-            ):
-                quotations[i] = None
-            quotation = Quotation.objects.create(
-                title=words[i], quotation=quotations[i]
-            )
-            quotation.save()
-
-        return HttpResponseRedirect(reverse("index"))
 
     return render(request, "wordPlay/import.html")
 
