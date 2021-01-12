@@ -99,19 +99,19 @@
 
             <div class="word-image definition">
                 {% if word.image %}
-                <img src="{{ word.image.url }}" alt="" width="150px" height="180px" />
+                <img src="{{ word.image.url }}" alt="" width="48%" height="180" />
                 {% elif word.image_url %}
-                <img src="{{ word.image_url }}" alt="" width="150px" height="180px" />
+                <img src="{{ word.image_url }}" alt="" width="48%" height="180" />
                 {% endif %}
 
 
                 {% if word.video %}
-                <video width="320" height="180" controls>
+                <video width="48%" height="180" controls>
                     <source src="{{ word.video.url }}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
                 {% elif word.video_url %}
-                <iframe width="320" height="180" src=" {{ word.video_url }}" frameborder="0" allowfullscreen>
+                <iframe width="48%" height="180" src=" {{ word.video_url }}" frameborder="0" allowfullscreen>
                 </iframe>
                 {% endif %}
             </div>

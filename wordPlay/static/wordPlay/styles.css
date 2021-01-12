@@ -331,18 +331,13 @@ h5 {
   border-bottom: 3px solid #e6e6e6;
 }
 
-.my-words,
-.edit-profile {
-  width: 70%;
-}
-
-.profile-items {
-  width: 80%;
+.my-words {
+  width: 575px;
 }
 
 .new-likes {
   margin-bottom: 30px;
-  width: 74%;
+  width: 575px;
   margin-right: 2%;
 }
 
@@ -448,10 +443,6 @@ iframe,
 .overview {
   margin-left: 15px;
   margin-top: 50px;
-}
-
-.edit-profile {
-  margin-right: 50px;
 }
 
 h4 {
@@ -581,6 +572,19 @@ h4 {
 }
 
 /* Tablets and under */
+@media (max-width: 1024px) {
+  .my-words,
+  .new-likes {
+    width: 100%;
+  }
+
+  .profile-image {
+    margin-top: 70px;
+    width: 88px;
+    height: 88px;
+  }
+}
+
 @media (max-width: 768px) {
   .main .grid,
   .profile .grid {
@@ -643,8 +647,6 @@ h4 {
   }
 
   hr {
-    background-color: grey;
-    width: 94%;
     margin-bottom: 5px;
     margin-top: 5px;
   }
@@ -739,12 +741,6 @@ h4 {
   }
 
   /* Mobile profile */
-  .profile-image {
-    margin-top: 70px;
-    width: 88px;
-    height: 88px;
-  }
-
   .personal-details p {
     margin-left: 50px;
   }
