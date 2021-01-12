@@ -85,7 +85,7 @@ $(function () {
   // Number of buttons at the top, not counting prev/next,
   // but including the dotted buttons.
   // Must be at least 5:
-  var paginationSize = 5; 
+  var paginationSize = 10; 
   var currentPage;
 
   function showPage(whichPage) {
@@ -114,13 +114,14 @@ $(function () {
   $(".pagination").append(
       $("<li>").addClass("page-item").attr({ id: "previous-page" }).append(
           $("<a>").addClass("page-link").attr({
-              href: "javascript:void(0)"}).text("Prev")
+              href: "javascript:void(0)"}).html("&#8249;")
       ),
       $("<li>").addClass("page-item").attr({ id: "next-page" }).append(
           $("<a>").addClass("page-link").attr({
-              href: "javascript:void(0)"}).text("Next")
+              href: "javascript:void(0)"}).html("&#8250;")
       )
   );
+
   // Show the page links
   $("#page").show();
   showPage(1);

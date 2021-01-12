@@ -58,6 +58,16 @@
 
             {% words request as words %}
 
+            {% block pagination %}
+            <nav aria-label="Page navigation">
+                <ul id="pagination-demo" class="pagination">
+
+                    <input id="page-numbers" type="hidden" value="{{ words.page_obj.paginator.num_pages }}">
+
+                </ul>
+            </nav>
+            {% endblock %}
+
             {% for word in words.words %}
             <div id="page">
                 <div class="new-words content">
@@ -266,17 +276,5 @@
     </a>
 </div>
 </div>
-
-{% words request as words %}
-
-{% block pagination %}
-<nav aria-label="Page navigation">
-    <ul id="pagination-demo" class="pagination">
-
-        <input id="page-numbers" type="hidden" value="{{ words.page_obj.paginator.num_pages }}">
-
-    </ul>
-</nav>
-{% endblock %}
 
 {% endblock %}

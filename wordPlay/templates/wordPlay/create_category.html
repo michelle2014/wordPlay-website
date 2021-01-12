@@ -15,7 +15,7 @@
             of
             "A Game of Thrones" is totally fine. Already have a
             category file elsewhere? </p>
-        <p id="import-creategory"><a href="">Import a category file.</a></p>
+        <p id="import-creategory"><a href="{% url 'upload' %}">Import a category file.</a></p>
     </div>
     <hr>
     <form action="{% url 'create_category' %}" novalidate method="post" name="category" enctype="multipart/form-data">

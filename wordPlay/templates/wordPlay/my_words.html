@@ -12,6 +12,16 @@
 
 {% words user as words %}
 
+{% block pagination %}
+<nav aria-label="Page navigation">
+    <ul id="pagination-demo" class="pagination">
+
+        <input id="page-numbers" type="hidden" value="{{ words.page_obj.paginator.num_pages }}">
+
+    </ul>
+</nav>
+{% endblock %}
+
 {% block words %}
 
 {% for word in words.words %}
@@ -159,43 +169,6 @@
 </div>
 {% endfor %}
 
-{% endblock %}
-
-<!-- Pagination 
-<nav aria-label="Page navigation">
-    <ul id="pagination-demo" class="pagination">
-        {% if words.page_obj.has_previous %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ words.page_obj.previous_page_number }}" tabindex="-1">Pre</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Pre</a>
-        </li>
-        {% endif %}
-        <div id="page-index">
-            <input id="page-numbers-index" type="hidden" value="{{ words.page_obj.paginator.num_pages }}">
-        </div>
-        {% if words.page_obj.has_next %}
-        <li class="page-item">
-            <a class="page-link" href="?page={{ words.page_obj.next_page_number }}">Next</a>
-        </li>
-        {% else %}
-        <li class="page-item disabled">
-            <a class="page-link" href="#" aria-disabled="true">Next</a>
-        </li>
-        {% endif %}
-    </ul>
-</nav> -->
-
-{% block pagination %}
-<nav aria-label="Page navigation">
-    <ul id="pagination-demo" class="pagination">
-
-        <input id="page-numbers" type="hidden" value="{{ words.page_obj.paginator.num_pages }}">
-
-    </ul>
-</nav>
 {% endblock %}
 
 {% endblock %}
