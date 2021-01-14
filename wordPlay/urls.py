@@ -13,6 +13,7 @@ urlpatterns = [
     path("trending_words", views.trending_words, name="trending_words"),
     path("upload", views.upload, name="upload"),
     path("search", views.search, name="search"),
+    path("about", views.about, name="about"),
     path("<str:username>", views.profile, name="profile"),
     path("<str:username>/words", views.words_view, name="words_view"),
     path("<str:username>/bookmarks", views.bookmarks_view, name="bookmarks_view"),
@@ -24,7 +25,6 @@ urlpatterns = [
     path("<str:username>/leaderboard", views.leaderboard, name="leaderboard"),
     path("<str:username>/likes", views.likes_view, name="likes_view"),
     path("<str:username>/likeds", views.likeds_view, name="likeds_view"),
-    path("about", views.about, name="about"),
     # API Routes
     path(
         "add_bookmarks/<int:word_id>/<int:user_id>",
