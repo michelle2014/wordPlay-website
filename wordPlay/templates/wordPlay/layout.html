@@ -39,18 +39,35 @@
                 <img src="{% static 'wordPlay.png' %}" alt="logo" width="32px">
             </a>
             <div id="homeLinks" class="dropdown-links">
-                <input type="text" placeholder="Search...">
+                <form action="{% url 'search' %}">
+                    {% csrf_token %}
+                    <input class="search" type="text" name="q" placeholder="Search...">
+                </form>
                 <hr>
                 <a href="{% url 'index' %}">Home</a>
                 <hr>
-                <a href="">Category</a>
+                <div class="dropdown show">
+                    <a class="nav-link dropdown-toggle" href="{% url 'index' %}" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Category
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        {% category as result %}
+                        {% for item in result %}
+                        <a class="dropdown-item" href="{% url 'index' item.category %}">
+                            {{ item.category }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
                 <hr>
                 {% if user.is_authenticated %}
                 <a href="{% url 'bookmarks_view' request.user %}">Bookmarks</a>
                 <hr>
                 <a href="{% url 'leaderboard' request.user %}">Leaderboard</a>
                 <hr>
-                <a href="#">{{ user.username }}</a>
+                <a href="{% url 'profile' request.user %}">{{ user.username }}</a>
                 <hr>
                 <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i>Log Out</a>
                 <hr>
@@ -86,12 +103,14 @@
                     </a>
 
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+
                         {% category as result %}
                         {% for item in result %}
                         <a class="dropdown-item" href="{% url 'index' item.category %}">
                             {{ item.category }}
                         </a>
                         {% endfor %}
+
                     </div>
                 </div>
             </li>
