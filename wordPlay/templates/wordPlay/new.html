@@ -38,16 +38,6 @@
                 {% for category in categories %}
                 <option value="{{ category.category }}">{{ category.category }}</option>
                 {% endfor %}
-                <!-- <option value="noun">Noun</option>
-                <option value="verb">Verb</option>
-                <option value="adjective">Adjective</option>
-                <option value="adverb">Adverb</option>
-                <option value="pronoun">Pronoun</option>
-                <option value="preposition">Preposition</option>
-                <option value="conjunction">Conjunction</option>
-                <option value="determiner">Determiner</option>
-                <option value="interjection">Interjection</option> -->
-
             </select>
         </div>
         <hr>
@@ -65,14 +55,14 @@
             <p id="word-quotation">{{ quote.quotation }}</p>
         </div>
         <hr>
-        <div class="create-part">
+        <div class="create-part flex">
             <label><span class="media"><strong>Image</strong> (optional)</span></label>
             {{ new.image }}
             {{ new.image_url }}
             </td>
         </div>
         <hr>
-        <div class="create-part">
+        <div class="create-part flex">
             <label><span class="media"><strong>Video</strong> (optional)</span></label>
             {{ new.video }}
             {{ new.video_url }}
