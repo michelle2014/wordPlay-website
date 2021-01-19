@@ -14,6 +14,7 @@ urlpatterns = [
     path("upload", views.upload, name="upload"),
     path("search", views.search, name="search"),
     path("about", views.about, name="about"),
+    path("download", views.download, name="download"),
     path("<str:username>", views.profile, name="profile"),
     path("<str:username>/words", views.words_view, name="words_view"),
     path("<str:username>/bookmarks", views.bookmarks_view, name="bookmarks_view"),

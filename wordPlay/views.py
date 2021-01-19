@@ -17,6 +17,8 @@ import pandas as pd
 import math
 from django.contrib import messages
 from .models import *
+import os
+import csv
 
 
 # Create your views here.
@@ -344,6 +346,40 @@ def upload(request):
             return render(request, "wordPlay/import.html")
 
     return render(request, "wordPlay/import.html")
+
+
+def get_model_fields(model):
+    return model._meta.fields
+
+
+def download(request):
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = "attachment; filename=words.csv"
+    writer = csv.writer(response)
+    for model in [Word, Synonym, Antonym, Quotation]:
+        # print(model)
+        name = model.__name__
+        # Write headers to CSV file
+        fields = get_model_fields(model)
+        if fields:
+            headers = fields
+        else:
+            headers = []
+            for field in model._meta.fields:
+                headers.append(field.name)
+        writer.writerow(headers)
+        # Write data to CSV file
+        for obj in model.objects.all():
+            row = []
+            for field in headers:
+                if field in headers:
+                    val = getattr(obj, field.name)
+                    if callable(val):
+                        val = val()
+                    row.append(val)
+            writer.writerow(row)
+        # Return CSV file to browser as download
+    return response
 
 
 @login_required
