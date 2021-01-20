@@ -9,6 +9,17 @@
             <strong> Trending quotations</strong> today
         </h6>
         <hr />
+
+        {% block pagination %}
+        <nav aria-label="Page navigation">
+            <ul id="pagination-demo" class="pagination">
+
+                <input id="page-numbers" type="hidden" value="{{ page_obj.paginator.num_pages }}">
+
+            </ul>
+        </nav>
+
+        {% endblock %}
         {% for trending_quote in trending_quotes %}
         {% if trending_quote.quotation %}
         <div id="page">
@@ -30,14 +41,4 @@
 {% endblock %}
 
 {% block trending_quotes %}
-{% endblock %}
-
-{% block pagination %}
-<nav aria-label="Page navigation">
-    <ul id="pagination-demo" class="pagination">
-
-        <input id="page-numbers" type="hidden" value="{{ page_obj.paginator.num_pages }}">
-
-    </ul>
-</nav>
 {% endblock %}

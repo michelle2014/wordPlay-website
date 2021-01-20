@@ -252,7 +252,7 @@ def upload(request):
     if request.method == "POST":
 
         excel_file = (
-            request.FILES["fileToUpload"] if "filepath" in request.FILES else False
+            request.FILES["fileToUpload"] if "fileToUpload" in request.FILES else False
         )
         if excel_file:
             file_suffix = str(excel_file).split(".")[-1]
@@ -320,6 +320,7 @@ def upload(request):
                     synonyms[i] = None
                 synonym = Synonym.objects.create(title=words[i], synonym=synonyms[i])
                 synonym.save()
+                print(synonym.synonym)
                 if antonyms[i] == "" or (
                     isinstance(antonyms[i], float) and math.isnan(antonyms[i])
                 ):

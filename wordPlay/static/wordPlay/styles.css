@@ -379,7 +379,8 @@ h5 {
 .word-edit,
 .word-delete {
   float: right;
-  border-radius: 10px;
+  padding: 1px 4px;
+  border-radius: 12px;
   margin-right: 10px;
   border: 1px solid var(--link--color);
   color: var(--link--color);
