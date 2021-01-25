@@ -187,12 +187,17 @@ def words(context, request):
                     word_quotations.remove(word_quotation)
 
     # Toggle like fontawsome color
+    quotations = Quotation.objects.all()
+
     all_likings = []
+
     for quotation in quotations:
         likings = Like.objects.filter(title=quotation)
+        likings = list(likings)
         for liking in likings:
+            # for liking in likings:
             all_likings.append(liking)
-
+    
     # Toggle bookmark fontawsome color
     all_bookmarks = Bookmark.objects.all()
 

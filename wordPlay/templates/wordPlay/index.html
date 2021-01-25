@@ -203,12 +203,12 @@
                             </iframe>
                             {% endif %}
                         </div>
+
                         {% for word_quotation in words.word_quotations %}
                         {% if word.id == word_quotation.title.id %}
                         {% if word_quotation.quotation %}
                         <form class="like-form">
                             {% csrf_token %}
-
                             <p class="quotes timestamp">
                                 {% if user.is_authenticated %}
                                 <span class="count{{ word_quotation.id }} like-count">
@@ -217,28 +217,27 @@
                                 {% endif %}
                                 {% if user.is_authenticated %}
                                 <span>
-
                                     <button class="like-button" id="like-button{{ word_quotation.id }}"
                                         onClick="like('{{ word_quotation.id }}', '{{ request.user.id }}')" type="submit"
                                         name="place-like">
                                         <span class="fa-stack" id="like-heart{{ word_quotation.id }}">
-                                            <i class="far fa-heart fa-stack-2x like-heart{{ word_quotation.id }}"></i>
+                                            <i class="far fa-heart fa-stack-2x like-heart{{ word_quotation.id }}">
+                                            </i>
                                             {% for all_liking in words.all_likings %}
                                             {% if all_liking.user == request.user %}
                                             {% if all_liking.title == word_quotation %}
-                                            <i class="fas fa-heart fa-stack-2x like-heart{{ word_quotation.id }}"></i>
+                                            <i class="fas fa-heart fa-stack-2x like-heart{{ word_quotation.id }}">
+                                            </i>
                                             {% endif %}
                                             {% endif %}
                                             {% endfor %}
                                         </span>
                                     </button>
-
                                 </span>
                                 {% endif %}
                                 Quotation:
 
                                 {{ word_quotation.quotation }}
-
 
                                 {% endif %}
                                 {% endif %}

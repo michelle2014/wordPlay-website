@@ -10,6 +10,7 @@
 <h4>My words...</h4>
 {% endblock %}
 
+
 {% words user as words %}
 
 {% block pagination %}
@@ -61,26 +62,56 @@
                 <div class="synonyms">Synonyms:
                     {% for word_synonym in words.word_synonyms %}
                     {% if word_synonym.title.id == word.id %}
-                    {% if word_synonym.synonym == none %}
+
+                    <!-- If user logged in -->
+                    {% if user.is_authenticated %}
+                    {% if word_synonym.synonym == None %}
                     {{ word_synonym.synonym }}
+                    {% elif word_synonym.synonym == 'nan' %} None
                     {% else %}
                     <button>
                         <a href="{% url 'word' word_synonym.synonym %}">{{ word_synonym.synonym }}</a>
                     </button>
                     {% endif %}
+
+                    <!-- If no user logged in -->
+                    {% else %}
+                    {% if word_synonym.synonym == None %}
+                    {{ word_synonym.synonym }}
+                    {% elif word_synonym.synonym == 'nan' %} None
+                    {% else %}
+                    {{ word_synonym.synonym }}
+                    {% endif %}
+                    {% endif %}
+
                     {% endif %}
                     {% endfor %}
                 </div>
                 <div class="antonyms">Antonyms:
                     {% for word_antonym in words.word_antonyms %}
                     {% if word.id == word_antonym.title.id %}
-                    {% if word_antonym.antonym == none %}
+
+                    <!-- If user logged in -->
+                    {% if user.is_authenticated %}
+                    {% if word_antonym.antonym == None %}
                     {{ word_antonym.antonym }}
+                    {% elif word_antonym.antonym == 'nan' %} None
                     {% else %}
                     <button>
                         <a href="{% url 'word' word_antonym.antonym %}">{{ word_antonym.antonym }}</a>
                     </button>
                     {% endif %}
+
+                    <!-- If no user logged in -->
+                    {% else %}
+                    {% if word_antonym.antonym == None %}
+                    {{ word_antonym.antonym }}
+                    {% elif word_antonym.antonym == 'nan' %} None
+                    {% else %}
+                    {{ word_antonym.antonym }}
+                    {% endif %}
+                    {% endif %}
+
                     {% endif %}
                     {% endfor %}
                 </div>
@@ -151,6 +182,7 @@
                     </span>
                     Quotation:
                     {{ word_quotation.quotation }}
+
                     <a class="quote_link" href="{% url 'add_quotation' word.id %}">
                         <i class="fas fa-plus"> Quotation</i>
                     </a>

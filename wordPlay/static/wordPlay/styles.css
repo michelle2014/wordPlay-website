@@ -498,7 +498,11 @@ h4 {
   color: var(--link--color);
 }
 
-.bookmark,
+.bookmark {
+  border: none;
+  background-color: #f5f5f5;
+}
+
 .like-button {
   border: none;
   background-color: #ffffff;

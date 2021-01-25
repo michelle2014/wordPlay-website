@@ -1,26 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-  // Set page numbers
-  // let totalPages = document.querySelector("#page-numbers"); 
-  // if (totalPages) {
-  //   for (i = 1, len = totalPages.value; i <= len; i++) {
-  //     let item = document.createElement("li");
-  //     item.setAttribute("class", "content");
-  //     item.innerHTML = `<a class="page-link content" href="?page=${[i]}">${[i]}</a>`;
-  //     document.querySelector("#page").append(item);
-  //   }
-  // }
-  
-  // let totalPages_index = document.querySelector("#page-numbers-index"); 
-  // if (totalPages_index) {
-  //   for (i = 1, len = totalPages_index.value; i <= len; i++) {
-  //     let item_index = document.createElement("li");
-  //     item_index.setAttribute("class", "content");
-  //     item_index.innerHTML = `<a class="page-link content" href="?page=${[i]}">${[i]}</a>`;
-  //     document.querySelector("#page-index").append(item_index);
-  //   }
-  // }
-
   // Prevent default submission of bookmark and like forms
   let forms = document.querySelectorAll(".like-form");
   let len_forms = forms.length;
@@ -261,9 +240,11 @@ function like(quotation_id, user_id) {
   // Change like heart background color after click and change back after click again
   let elem = document.getElementsByClassName(`far fa-heart like-heart${ quotation_id } fa-stack-2x`);
   let fas_elem = document.getElementsByClassName(`fas fa-heart like-heart${ quotation_id } fa-stack-2x`);
-  if (elem[0]) {elem[0].setAttribute("class", `fas fa-heart like-heart${ quotation_id } fa-stack-2x`);}
-  else if (fas_elem[0]) {fas_elem[0].setAttribute("class", `far fa-heart like-heart${ quotation_id } fa-stack-2x`);}
-
+  
+  // console.log(fas_elem[0]);
+  if (fas_elem[0]) {fas_elem[0].setAttribute("class", `far fa-heart like-heart${ quotation_id } fa-stack-2x`);}
+  else if (elem[0]) {elem[0].setAttribute("class", `fas fa-heart like-heart${ quotation_id } fa-stack-2x`);}
+  
   const request = new Request(`/wordPlay/likes/${quotation_id}/${user_id}`, {
     headers: { "X-CSRFToken": csrftoken },
   });
