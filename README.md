@@ -45,7 +45,7 @@ Built with
 ## Features
 
 Create a word:
-![Create a word](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/create_example.png "Create a word")
+![Create a word](https://raw.githubusercontent.com/michelle2014/wordPlay-website/master/wordPlay/static/create_example.png "Create a word")
 
 Import words from xls, xlsx, csv and ods files:
 ![Import a word](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/import_example.png "Import words")
