@@ -29,10 +29,11 @@ A separate section for beginners learning English will also be developed.
 
 Quick look at a word example:
 
-![Word example](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/word_example.png "Word example")
+![Word example](https://github.com/michelle2014/wordPlay-website/blob/master/wordPlay/static/word_example.png "Word example")
 
 A bit of competition:
-![Leaderboard](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/leaderboard_example.png "Leaderboard")
+
+![Leaderboard](https://github.com/michelle2014/wordPlay-website/blob/master/wordPlay/static/leaderboard_example.png "Leaderboard")
 
 ## Tech/framework used
 
@@ -45,16 +46,20 @@ Built with
 ## Features
 
 Create a word:
-![Create a word](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/create_example.png "Create a word")
+
+![Create a word](https://github.com/michelle2014/wordPlay-website/blob/master/wordPlay/static/create_example.png "Create a word")
 
 Import words from xls, xlsx, csv and ods files:
-![Import a word](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/import_example.png "Import words")
+
+![Import a word](https://github.com/michelle2014/wordPlay-website/blob/master/wordPlay/static/import_example.png "Import words")
 
 Export all words:
-![Export all words](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/export_example.png "Export all words")
+
+![Export all words](https://github.com/michelle2014/wordPlay-website/blob/master/wordPlay/static/export_example.png "Export all words")
 
 Exported CSV file example:
-![Exported CSV file example](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/csv_open_example.png "Exported CSV file example")
+
+![Exported CSV file example](https://github.com/michelle2014/wordPlay-website/blob/master/wordPlay/static/csv_open_example.png "Exported CSV file example")
 
 ## Distinctiveness and complexity
 
