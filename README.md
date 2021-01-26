@@ -29,7 +29,7 @@ A separate section for beginners learning English will also be developed.
 
 Quick look at a word example:
 
-![Word example](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/word_example.png)
+![Word example](./wordPlay-website/tree/master/wordPlay/static/word_example.png)
 
 A bit of competition:
 ![Leaderboard](https://github.com/michelle2014/wordPlay-website/tree/master/wordPlay/static/leaderboard_example.png "Leaderboard")
