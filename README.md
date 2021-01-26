@@ -21,6 +21,8 @@ As a former linguist, I have always wanted to find a better way to study foreign
 
 ## Project status
 
+Images/Videos tab will be updated to contain more contents.
+
 It only supports English vocabulary at the moment. But it will be developed and improved for polyglots learning different languages, such as Japanese, French, Chinese, Spanish etc., or even Dothraki! And words with same or similiar definitions can be compared for reinforcing memory and connection.
 
 A separate section for beginners learning English will also be developed.
@@ -71,13 +73,31 @@ Exported CSV file example:
 
 1. Used [Custom template tags](https://docs.djangoproject.com/en/3.1/howto/custom-template-tags/) for functionality not covered by the core set of template primitives.
 
-2. Applied import function for quick database building
+2. Applied an import function for quick database building
 
 3. Employed [download](https://docs.djangoproject.com/en/3.1/howto/outputting-csv/) for outputting csv files
 
 4. Wrote [validators](https://docs.djangoproject.com/en/3.1/ref/validators/) for validating emails
 
 5. Created [.gitignore](https://git-scm.com/docs/gitignore) for specifying intentionally untracked file of secret.py to ignore, which contains [SECRET_KEY](https://docs.djangoproject.com/en/3.1/ref/settings/).
+
+6. Limited the number of visible pages in pagination by JavaScript
+
+7. Defined methods in models for getting remote images and videos and embeding them in word descriptions, in addition to directly uploading images and videos to the app
+
+8. Added image field for user's profile image and a form in models for updating the image
+
+9. Adopted [Django messages framework](https://docs.djangoproject.com/en/3.1/ref/contrib/messages/)
+
+10. Made use of [Pandas](https://pandas.pydata.org/) for reading of excel files
+
+11. Each words may have several quotations for the sake of complexity of word context, only the latest one is displayed in word descriptions on account of simplicity and space
+
+12. Tabs have been created for expandable content
+
+13. Bookmarks for sharing database of others.
+
+14. Ability to search for a specific word. Since different user may have different descriptions, word is not unique. Search results could be a list
 
 ## What’s contained in each file?
 
@@ -91,13 +111,15 @@ Exported CSV file example:
 
 - After you’ve created and activated a virtual environment, enter the command:
 
-```$ python -m pip install Django
+```
+$ python -m pip install Django
 
 ```
 
 You can tell Django is installed and which version by running the following command in a shell prompt (indicated by the $ prefix):
 
-```$ python -m django --version
+```
+$ python -m django --version
 
 ```
 
@@ -107,13 +129,15 @@ If Django is installed, you should see the version of your installation. If it i
 
 How to check python version:
 
-```C:> python -V
+```
+C:> python -V
 Python 3.8.4
 ```
 
 or
 
-```C:> python -version
+```
+C:> python -version
 Python 3.8.4
 ```
 
@@ -121,7 +145,8 @@ Python 3.8.4
 
 4. Start a local web server by running the command below:
 
-```python manage.py runserver
+```
+$ python manage.py runserver
 
 ```
 
