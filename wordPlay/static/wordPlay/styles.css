@@ -387,7 +387,8 @@ h5 {
   font-size: 0.9rem;
 }
 
-.word-edit:focus {
+.word-edit:focus,
+.word-delete:focus {
   outline: none;
 }
 

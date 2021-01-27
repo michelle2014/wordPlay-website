@@ -67,7 +67,9 @@ Exported CSV file example:
 
 ### Distinctiveness
 
-1.
+1. The app can work with kindle vocabulary builder. First of all, export words from kindle using [Kindle Mate](https://findanyanswer.com/goto/453765) into a xlsx file. Modify the file and add information if necessary. Then, import to the app to study.
+
+2.
 
 ### Complexity
 
