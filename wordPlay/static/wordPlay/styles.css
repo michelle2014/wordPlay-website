@@ -234,6 +234,10 @@ label {
   margin-bottom: 50px;
 }
 
+#id_category {
+  width: 100%;
+}
+
 /* Main grid */
 .container {
   max-width: 1350px;

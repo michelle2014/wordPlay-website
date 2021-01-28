@@ -1,31 +1,43 @@
 # Alt-wordPlay
 
-This repo is a web application designed for learning English vocabulary from not only word meanings, but also synonmys, antonmys, quotations, images and videos. Logged in users can also import and export word database for backup and offline learning.
+This repo is a web application designed for learning English vocabulary from not only word meanings, but also synonmys, antonmys, quotations, images and videos.
+
+Logged in users can also import and export word database for backup and offline learning.
 
 ## Table of contents
 
 - [Motivation](#motivation)
 - [Project status](#project-status)
 - [Screenshots](#screenshots)
-- [Tech/framework used](#tech/framework-used)
+- [Tech/framework used](#tech-/-framework-used)
 - [Features](#features)
-- [Distinctiveness and complexity](#Distinctiveness-and-complexity)
-- [What’s contained in each file](#What’s-contained-in-each-file)
-- [How to run the app?](#how-to-run-the-app?)
+- [Distinctiveness and complexity](#distinctiveness-and-complexity)
+- [What’s contained in each file created?](#what’s-contained-in-each-file-created-?)
+- [How to run the app?](#how-to-run-the-app-?)
 - [Credits](#credits)
 - [Sources](#sources)
 
 ## Motivation
 
-As a former linguist, I have always wanted to find a better way to study foreign languages. Words are core components of any languages of the world. Establishing a personal word database helps not only in memorizing, but also improving clarity and vividity through images and videos, expanding vocabulary by providing synonyms and antonyms, and building up sophisticated context through adding quotations.
+As a former linguist, I have always wanted to find a better way to study foreign languages.
+
+Words are core components of any languages of the world.
+
+Establishing a personal word database helps not only in memorizing, but also improving clarity and vividity through images and videos, expanding vocabulary by providing synonyms and antonyms, and building up sophisticated context through adding quotations.
 
 ## Project status
 
 Images/Videos tab will be updated to contain more contents.
 
-It only supports English vocabulary at the moment. But it will be developed and improved for polyglots learning different languages, such as Japanese, French, Chinese, Spanish etc., or even Dothraki! And words with same or similiar definitions can be compared for reinforcing memory and connection.
+It only supports English vocabulary at the moment. But it will be developed and improved for polyglots learning different languages, such as Japanese, French, Chinese, Spanish etc., or even Dothraki!
+
+And words with the same or similiar definitions in the same language or of different languages can be compared for reinforcing memory and connection.
 
 A separate section for beginners learning English will also be developed.
+
+Categories have been set up and can be added, based on which new function is planned to be created for group learning.
+
+Download by category is, of course, necessary in the future.
 
 ## Screenshots
 
@@ -67,41 +79,65 @@ Exported CSV file example:
 
 ### Distinctiveness
 
-1. The app can work with kindle vocabulary builder. First of all, export words from kindle using [Kindle Mate](https://findanyanswer.com/goto/453765) into a xlsx file. Modify the file and add information if necessary. Then, import to the app to study.
+1. Applied an upload function for quick word database building. File format supported: tsv, csv, xls, xlsx, ods.
 
-2.
+2. Employed [download](https://docs.djangoproject.com/en/3.1/howto/outputting-csv/) for outputting csv files of word data.
+
+3. The app can work with kindle vocabulary builder. First of all, export words from kindle using [Kindle Mate](https://findanyanswer.com/goto/453765) for windows or [Fluent Cards](https://fluentcards.com/) for Linux into a xlsx file or other file formats supported. Modify the file and add information if necessary. Then, import the file to the app to study. If further modification after import is needed, a pre-filled edit form is also available to use.
+
+4. Ability to search for a specific word. Since different user may have different description for the same word and even word of same spelling could have different definitions in different languages, word is not unique. Search result could be a list.
+
+5. Defined methods in models for getting remote images and videos and embeding them in word descriptions, in addition to directly uploading images and videos to the app. In fact, Anki, despite of a good app, does't provide a way for working directly with remote images and videos. Users need to seek to HTML video tag or possiblely canvas tag to make it work. But audio and video elements are quite important in studying languages because they help quickly associate word with context and deeply comprehend word meanings.
 
 ### Complexity
 
-1. Used [Custom template tags](https://docs.djangoproject.com/en/3.1/howto/custom-template-tags/) for functionality not covered by the core set of template primitives.
+1. Used [Custom template tags](https://docs.djangoproject.com/en/3.1/howto/custom-template-tags/) for functionality not covered by the core set of template primitives. With one function, custom template tags of words can be applied to different pages of the app.
 
-2. Applied an import function for quick database building
+2. Wrote [validators](https://docs.djangoproject.com/en/3.1/ref/validators/) for validating emails.
 
-3. Employed [download](https://docs.djangoproject.com/en/3.1/howto/outputting-csv/) for outputting csv files
+3. Created [.gitignore](https://git-scm.com/docs/gitignore) for specifying intentionally untracked file of secret.py to ignore, which contains [SECRET_KEY](https://docs.djangoproject.com/en/3.1/ref/settings/) for security reason.
 
-4. Wrote [validators](https://docs.djangoproject.com/en/3.1/ref/validators/) for validating emails
+4. Limited the number of visible pages in pagination by JavaScript. Extra page number is displayed as '...' in case of pagination size larger than 10.
 
-5. Created [.gitignore](https://git-scm.com/docs/gitignore) for specifying intentionally untracked file of secret.py to ignore, which contains [SECRET_KEY](https://docs.djangoproject.com/en/3.1/ref/settings/).
+5. Added image field for user's profile image and a form in models for updating the image.
 
-6. Limited the number of visible pages in pagination by JavaScript
+6. Adopted [Django messages framework](https://docs.djangoproject.com/en/3.1/ref/contrib/messages/).
 
-7. Defined methods in models for getting remote images and videos and embeding them in word descriptions, in addition to directly uploading images and videos to the app
+7. Made use of [Pandas](https://pandas.pydata.org/) for reading excel files.
 
-8. Added image field for user's profile image and a form in models for updating the image
+8. Each word may have several quotations for the sake of complexity of word context, only the latest one is displayed in word descriptions on account of simplicity and space.
 
-9. Adopted [Django messages framework](https://docs.djangoproject.com/en/3.1/ref/contrib/messages/)
+9. Tabs have been created for expandable content.
 
-10. Made use of [Pandas](https://pandas.pydata.org/) for reading of excel files
+10. Bookmarks for sharing database of others.
 
-11. Each words may have several quotations for the sake of complexity of word context, only the latest one is displayed in word descriptions on account of simplicity and space
+## What’s contained in each file created?
 
-12. Tabs have been created for expandable content
+- secrets.py in capstone folder for keeping [SECRET_KEY](https://docs.djangoproject.com/en/3.1/ref/settings/) for security reason.
 
-13. Bookmarks for sharing database of others.
+- images, profiles and videos folders for respectively keeping local images, profile images and videos
 
-14. Ability to search for a specific word. Since different user may have different descriptions, word is not unique. Search results could be a list
+- urls.py in wordPlay app folder for page routes and API routes
 
-## What’s contained in each file?
+- models.py in wordPlay app folder for creating models and forms
+
+- view.py in wordPlay app folder for getting data from database, providing context for custom template tags and writing API for asychronous response
+
+- play.js in static folder for limiting pagination size, disabling buttons, asynchronous submission of like and bookmark form and asynchronous calculation thereof, changing fontawesome when button is clicked
+
+- styles.css in static folder for styling displayed pages
+
+- html files in templates folder for for displaying pages
+
+- word_extras.py in templatetags folder for creating custom template tags
+
+- requirements.txt in the root directory for runtime requirements
+
+- spec.md in the root directory for project planning
+
+- test.csv, test.ods, test.tsv, test.xls, test.xlsx, test1.xlsx, upload.xls in the root directory for testing import with different file formats
+
+- words.csv in the root directory for an example of downloaded word data file
 
 ## How to run the app?
 
@@ -159,3 +195,5 @@ $ python manage.py runserver
 ## Sources
 
 This app is inspired by Damien Elmes, the developer of [Anki](https://apps.ankiweb.net/).
+
+Group learning idea is encouraged by [Free Rice](https://freerice.com/).
