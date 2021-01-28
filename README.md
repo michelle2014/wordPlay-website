@@ -9,11 +9,11 @@ Logged in users can also import and export word database for backup and offline 
 - [Motivation](#motivation)
 - [Project status](#project-status)
 - [Screenshots](#screenshots)
-- [Tech/framework used](#tech-/-framework-used)
+- [Tech/framework used](#tech/framework-used)
 - [Features](#features)
 - [Distinctiveness and complexity](#distinctiveness-and-complexity)
-- [What’s contained in each file created?](#what’s-contained-in-each-file-created-?)
-- [How to run the app?](#how-to-run-the-app-?)
+- [What’s contained in each file created](#what’s-contained-in-each-file-created)
+- [How to run the app](#how-to-run-the-app)
 - [Credits](#credits)
 - [Sources](#sources)
 
@@ -190,7 +190,7 @@ $ python manage.py runserver
 
 ## Credits
 
-[Limit the number of visible pages in pagination by JavaScript from stackoverflow](https://stackoverflow.com/questions/46382109/limit-the-number-of-visible-pages-in-pagination)
+[Limit the number of visible pages in pagination](https://stackoverflow.com/questions/46382109/limit-the-number-of-visible-pages-in-pagination) by trincot from stackoverflow
 
 ## Sources
 
