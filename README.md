@@ -87,7 +87,7 @@ Exported CSV file example:
 
 4. Ability to search for a specific word. Since different user may have different description for the same word and even word of same spelling could have different definitions in different languages, word is not unique. Search result could be a list.
 
-5. Defined methods in models for getting remote images and videos and embeding them in word descriptions, in addition to directly uploading images and videos to the app. In fact, Anki, despite of a good app, does't provide a way for working directly with remote images and videos. Users need to seek to HTML video tag or possiblely canvas tag to make it work. But audio and video elements are quite important in studying languages because they help quickly associate word with context and deeply comprehend word meanings.
+5. Defined methods in models for getting remote images and videos and embeding them in word descriptions, in addition to directly uploading images and videos to the app. In fact, [Anki](https://apps.ankiweb.net/), despite of a good app, does't provide a way for working directly with remote images and videos. Users need to seek to HTML video tag or possiblely canvas tag to make it work. But audio and video elements are quite important in studying languages because they help quickly associate word with context and deeply comprehend word meanings.
 
 ### Complexity
 
@@ -117,19 +117,21 @@ Exported CSV file example:
 
 - images, profiles and videos folders for respectively keeping local images, profile images and videos
 
-- urls.py in wordPlay app folder for page routes and API routes
+- urls.py in wordPlay app folder for each html page route and API routes
 
 - models.py in wordPlay app folder for creating models and forms
 
-- view.py in wordPlay app folder for getting data from database, providing context for custom template tags and writing API for asychronous response
+- view.py in wordPlay app folder for getting data from database for html page diplay, creating new words and categories, editing existing words, updating user's profile image, uploading files, downloading word data file, providing context for custom template tags and writing API for asychronous response
 
 - play.js in static folder for limiting pagination size, disabling buttons, asynchronous submission of like and bookmark form and asynchronous calculation thereof, changing fontawesome when button is clicked
 
-- styles.css in static folder for styling displayed pages
+- styles.css in static folder for styling displayed pages and mobile responsive
 
 - html files in templates folder for for displaying pages
 
 - word_extras.py in templatetags folder for creating custom template tags
+
+- _init_.py in templatetags folder for ensuring the directory is treated as a Python package
 
 - requirements.txt in the root directory for runtime requirements
 
